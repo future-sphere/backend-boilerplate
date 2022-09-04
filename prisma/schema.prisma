@@ -4,8 +4,12 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://bctc:Bctc666!@lab.bctc.io:7087/se-adv-2-project-2-peter"
+  url      = "postgresql://bctc:Bctc666!@lab.bctc.io:7087/se-adv-2-project-2-erica"
 }
+
+
+
+
 
 model Student {
   id        Int    @id @default(autoincrement())
@@ -13,4 +17,28 @@ model Student {
   lastName  String
   age       Int
   grade     String
+
+  order     Order[]
 }
+
+
+
+model Product {
+  id       Int    @id @default(autoincrement())
+  title    String
+  price    Int
+  quantity Int
+
+  order    Order? @relation(fields: [orderId], references: [id])
+  orderId  Int?
+}
+
+
+
+model Order {
+  id        Int      @id @default(autoincrement())
+  student   Student  @relation(fields: [studentId], references: [id])
+  studentId Int
+  products  Product[]
+}
+
