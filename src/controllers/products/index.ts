@@ -8,13 +8,39 @@ export const getAllProducts = async (req: Request, res: Response) => {
   res.json(products);
 };
 
+// Create a controller that gets all products from a category
+export const getAllProductsByCategory = async (req: Request, res: Response) => {
+  const { categoryId } = req.params;
+  const products = await prisma.product.findMany({
+    where: {
+      categoryId,
+    },
+  });
+  res.json(products);
+};
+
+export const getProductById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const product = await prisma.product.findFirst({
+    where: {
+      id: Number(id),
+    },
+  });
+  res.json(product);
+};
+
 export const createProduct = async (req: Request, res: Response) => {
-  const { title, price, quantity } = req.body;
+  const { title, price, quantity, categoryId } = req.body;
   const product = await prisma.product.create({
     data: {
       title,
       price: Number(price),
       quantity: Number(quantity),
+      category: {
+        connect: {
+          id: categoryId,
+        },
+      },
     },
   });
   res.json(product);

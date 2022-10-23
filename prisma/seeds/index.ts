@@ -9,6 +9,32 @@ export const seeding = async (prisma: PrismaClient) => {
       lastName: 'Zhang',
       age: 10,
       grade: 'A',
+      email: 'kevin.zhang@example.com',
+      password: '123456',
+    },
+  });
+
+  // Create some dummy category here:
+  // Laptops, Phones, Tablets, Accessories.
+
+  const laptopCategory = await prisma.category.create({
+    data: {
+      title: 'Laptops',
+    },
+  });
+  const phoneCategory = await prisma.category.create({
+    data: {
+      title: 'Phones',
+    },
+  });
+  const tabletCategory = await prisma.category.create({
+    data: {
+      title: 'Tablets',
+    },
+  });
+  const accessoriesCategory = await prisma.category.create({
+    data: {
+      title: 'Accessories',
     },
   });
 
@@ -18,6 +44,11 @@ export const seeding = async (prisma: PrismaClient) => {
       title: 'iPhone 14',
       price: 1999,
       quantity: 1000,
+      category: {
+        connect: {
+          id: phoneCategory.id,
+        },
+      },
     },
   });
 

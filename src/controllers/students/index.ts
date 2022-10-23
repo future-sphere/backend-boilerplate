@@ -1,6 +1,8 @@
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { Request, Response } from 'express';
 import { prisma } from '../..';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+const secretKey = process.env.JWT_SECRET;
 
 export const getStudents = async (req: Request, res: Response) => {
   const students = await prisma.student.findMany({
@@ -17,16 +19,66 @@ export const getStudents = async (req: Request, res: Response) => {
 };
 
 export const createStudent = async (req: Request, res: Response) => {
-  const { firstName, lastName, age, grade } = req.body;
+  const { firstName, lastName, age, grade, email, password } = req.body;
+  const existingEmail = await prisma.student.findFirst({
+    where: {
+      email,
+    },
+  });
+  if (existingEmail) {
+    return res.json({
+      message: 'Email already exists',
+    });
+  }
   const student = await prisma.student.create({
     data: {
       firstName,
       lastName,
       age: Number(age),
       grade,
+      email,
+      password: bcrypt.hashSync(password),
     },
   });
   res.json(student);
+};
+
+export const loginStudent = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  if (!secretKey) {
+    return res.json({
+      message: 'JWT_SECRET is not set',
+    });
+  }
+
+  const student = await prisma.student.findFirst({
+    where: {
+      email,
+    },
+  });
+  if (!student) {
+    return res.json({
+      message: 'We cannot find your account associated with this email',
+    });
+  }
+  const isPasswordCorrect = bcrypt.compareSync(password, student.password);
+  if (!isPasswordCorrect) {
+    return res.json({
+      message: 'Incorrect password',
+    });
+  }
+
+  const token = jwt.sign(
+    {
+      id: student.id,
+    },
+    secretKey,
+    {
+      expiresIn: '1d',
+    }
+  );
+  res.json(token);
 };
 
 export const deleteStudent = async (req: Request, res: Response) => {
@@ -67,6 +119,14 @@ export const deleteStudent = async (req: Request, res: Response) => {
 
 export const updateStudent = async (req: Request, res: Response) => {
   const { id, firstName, lastName, age, grade } = req.body;
+
+  const requestStudentId = req.headers.authorization?.split(' ')[1];
+  if (requestStudentId !== id) {
+    return res.json({
+      message: 'You are not authorized to update this student',
+    });
+  }
+
   const existingStudent = await prisma.student.findFirst({
     where: {
       id: Number(id),

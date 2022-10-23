@@ -9,6 +9,8 @@ datasource db {
 
 model Student {
   id        Int     @id @default(autoincrement())
+  email     String  @unique
+  password  String
   firstName String
   lastName  String
   age       Int
@@ -17,11 +19,13 @@ model Student {
 }
 
 model Product {
-  id       Int     @id @default(autoincrement())
-  title    String
-  price    Int
-  quantity Int
-  orders   Order[]
+  id         Int       @id @default(autoincrement())
+  title      String
+  price      Int
+  quantity   Int
+  orders     Order[]
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?
 }
 
 model Order {
@@ -29,4 +33,13 @@ model Order {
   student   Student   @relation(fields: [studentId], references: [id], onDelete: Restrict)
   studentId Int
   products  Product[]
+}
+
+model Category {
+  id                String    @id @default(uuid())
+  title             String
+  products          Product[]
+  description       String?
+  thumbnailImageUrl String?
+  heroImageUrl      String?
 }
