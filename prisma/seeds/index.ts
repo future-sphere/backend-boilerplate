@@ -44,9 +44,48 @@ export const seeding = async (prisma: PrismaClient) => {
       title: 'iPhone 14',
       price: 1999,
       quantity: 1000,
+      description: 'The best iPhone ever',
       category: {
         connect: {
           id: phoneCategory.id,
+        },
+      },
+      thumbnailImage:
+        'https://res.cloudinary.com/dtgh01qqo/image/upload/v1670189033/se-adv-2/iphone-14-pro-model-unselect-gallery-1-202209.jpg',
+      reviews: {
+        createMany: {
+          data: [
+            {
+              rating: 5,
+              comment: 'I love this product',
+              studentId: dummyStudent.id,
+            },
+            {
+              rating: 4,
+              comment: 'I like this product',
+              studentId: dummyStudent.id,
+            },
+          ],
+        },
+      },
+      highlightTitle: 'iPhone 14 Pro',
+      highlightDescription: 'The best iPhone ever',
+      productHighlights: {
+        createMany: {
+          data: [
+            {
+              title: 'A14 Bionic',
+              subtitle: 'The fastest chip in a smartphone',
+              image:
+                'https://res.cloudinary.com/dtgh01qqo/image/upload/v1670189195/se-adv-2/iphone-14-pro-model-unselect-gallery-2-202209_GEO_US.jpg',
+            },
+            {
+              title: 'Pro camera system',
+              subtitle: 'The most advanced camera system ever on iPhone',
+              image:
+                'https://res.cloudinary.com/dtgh01qqo/image/upload/v1670189196/se-adv-2/291-hero.jpg',
+            },
+          ],
         },
       },
     },

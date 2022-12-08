@@ -8,24 +8,51 @@ datasource db {
 }
 
 model Student {
-  id        Int     @id @default(autoincrement())
-  email     String  @unique
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  avatar    String?
   password  String
   firstName String
   lastName  String
   age       Int
   grade     String
   orders    Order[]
+  reviews   Review[]
 }
 
 model Product {
-  id         Int       @id @default(autoincrement())
-  title      String
-  price      Int
-  quantity   Int
-  orders     Order[]
-  category   Category? @relation(fields: [categoryId], references: [id])
-  categoryId String?
+  id                   Int                @id @default(autoincrement())
+  title                String
+  price                Int
+  quantity             Int
+  orders               Order[]
+  category             Category?          @relation(fields: [categoryId], references: [id])
+  categoryId           String?
+  thumbnailImage       String?
+  reviews              Review[]
+  description          String?
+  productHighlights    ProductHighlight[]
+  highlightTitle       String?
+  highlightDescription String?
+}
+
+model ProductHighlight {
+  id        Int      @id @default(autoincrement())
+  title     String
+  subtitle  String
+  image     String
+  product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  rating    Int
+  comment   String
+  product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+  student   Student? @relation(fields: [studentId], references: [id])
+  studentId Int?
 }
 
 model Order {

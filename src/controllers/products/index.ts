@@ -25,6 +25,15 @@ export const getProductById = async (req: Request, res: Response) => {
     where: {
       id: Number(id),
     },
+    include: {
+      category: true,
+      reviews: {
+        include: {
+          student: true,
+        },
+      },
+      productHighlights: true,
+    },
   });
   res.json(product);
 };

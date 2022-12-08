@@ -8,6 +8,19 @@ export const getAllCategories = async (req: Request, res: Response) => {
   res.json(data);
 };
 
+export const getCategoryById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const data = await prisma.category.findFirst({
+    where: {
+      id,
+    },
+    include: {
+      products: true,
+    },
+  });
+  res.json(data);
+};
+
 export const createCategory = async (req: Request, res: Response) => {
   const { title } = req.body;
   const data = await prisma.category.create({
