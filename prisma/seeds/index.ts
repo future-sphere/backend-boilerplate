@@ -91,6 +91,33 @@ export const seeding = async (prisma: PrismaClient) => {
     },
   });
 
+  const products = await prisma.product.createMany({
+    data: [
+      {
+        title: 'MacBook Pro 2021',
+        price: 2999,
+        quantity: 1000,
+        categoryId: laptopCategory.id,
+      },
+      {
+        title: 'iPad Pro 2021',
+        price: 999,
+        quantity: 1000,
+        categoryId: tabletCategory.id,
+      },
+      {
+        title: 'Apple Watch Series 7',
+        price: 599,
+        quantity: 1000,
+        categoryId: accessoriesCategory.id,
+      },
+    ],
+  });
+
+  if (products) {
+    console.log(' products created.');
+  }
+
   const order = await prisma.order.create({
     data: {
       student: {
