@@ -28,6 +28,8 @@ model Product {
   orders               Order[]
   category             Category?          @relation(fields: [categoryId], references: [id])
   categoryId           String?
+  subCategory          SubCategory?       @relation(fields: [subCategoryId], references: [id])
+  subCategoryId        String?
   thumbnailImage       String?
   reviews              Review[]
   description          String?
@@ -63,10 +65,20 @@ model Order {
 }
 
 model Category {
-  id                String    @id @default(uuid())
+  id                String        @id @default(uuid())
   title             String
   products          Product[]
   description       String?
   thumbnailImageUrl String?
   heroImageUrl      String?
+  subCategory       SubCategory[]
+}
+
+model SubCategory {
+  id          String    @id @default(uuid())
+  title       String
+  category    Category? @relation(fields: [categoryId], references: [id])
+  categoryId  String?
+  description String?
+  Product     Product[]
 }
