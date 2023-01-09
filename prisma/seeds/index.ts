@@ -20,6 +20,7 @@ export const seeding = async (prisma: PrismaClient) => {
   const laptopCategory = await prisma.category.create({
     data: {
       title: 'Laptops',
+      slug: 'laptop',
       thumbnailImageUrl:
         'https://www.apple.com/v/mac/home/br/images/overview/compare/compare_mbp14_and_16__f2dhysusb5im_large.png',
       subCategory: {
@@ -27,15 +28,19 @@ export const seeding = async (prisma: PrismaClient) => {
           data: [
             {
               title: 'MacBook Pro',
+              slug: 'macbook-pro',
             },
             {
               title: 'MacBook Air',
+              slug: 'macbook-air',
             },
             {
               title: 'MacBook',
+              slug: 'macbook',
             },
             {
               title: 'iMac',
+              slug: 'imac',
             },
           ],
         },
@@ -45,6 +50,7 @@ export const seeding = async (prisma: PrismaClient) => {
   const phoneCategory = await prisma.category.create({
     data: {
       title: 'Phones',
+      slug: 'phone',
       thumbnailImageUrl:
         'https://www.apple.com/v/iphone/home/bk/images/overview/why-iphone/ios16__b66zg2a3322q_large.jpg',
       subCategory: {
@@ -52,12 +58,15 @@ export const seeding = async (prisma: PrismaClient) => {
           data: [
             {
               title: 'iPhone 14',
+              slug: 'iphone-14',
             },
             {
               title: 'iPhone 13',
+              slug: 'iphone-13',
             },
             {
               title: 'iPhone 12',
+              slug: 'iphone-12',
             },
           ],
         },
@@ -67,6 +76,7 @@ export const seeding = async (prisma: PrismaClient) => {
   const tabletCategory = await prisma.category.create({
     data: {
       title: 'Tablets',
+      slug: 'tablet',
       thumbnailImageUrl:
         'https://www.apple.com/v/ipad/home/cc/images/overview/hero/ipad_hero__d0tgmaq6shm6_large.jpg',
       subCategory: {
@@ -74,12 +84,15 @@ export const seeding = async (prisma: PrismaClient) => {
           data: [
             {
               title: 'iPad Pro',
+              slug: 'ipad-pro',
             },
             {
               title: 'iPad Air',
+              slug: 'ipad-air',
             },
             {
               title: 'iPad',
+              slug: 'ipad',
             },
           ],
         },
@@ -89,6 +102,7 @@ export const seeding = async (prisma: PrismaClient) => {
   const accessoriesCategory = await prisma.category.create({
     data: {
       title: 'Accessories',
+      slug: 'accessories',
       thumbnailImageUrl:
         'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/magsafe-202209?wid=2880&hei=960&fmt=jpeg&qlt=90&.v=1666047384972',
       subCategory: {
@@ -96,12 +110,15 @@ export const seeding = async (prisma: PrismaClient) => {
           data: [
             {
               title: 'Magsafe',
+              slug: 'magsafe',
             },
             {
               title: 'AirPods',
+              slug: 'airpods',
             },
             {
               title: 'Apple Watch',
+              slug: 'apple-watch',
             },
           ],
         },
@@ -118,13 +135,19 @@ export const seeding = async (prisma: PrismaClient) => {
   // Create a product for iPhone 14, priced at whatever you want and with how many ever quantity you want
   const dummyProduct = await prisma.product.create({
     data: {
-      title: 'iPhone 14',
+      title: 'iPhone 14 Pro',
+      slug: 'iphone-14-pro',
       price: 1999,
       quantity: 1000,
       description: 'The best iPhone ever',
       subCategory: {
         connect: {
           id: iPhoneCategory?.id,
+        },
+      },
+      category: {
+        connect: {
+          id: phoneCategory.id,
         },
       },
       thumbnailImage:
@@ -190,6 +213,7 @@ export const seeding = async (prisma: PrismaClient) => {
     data: [
       {
         title: 'MacBook Pro 2021',
+        slug: 'macbook-pro-2021',
         price: 2999,
         quantity: 1000,
         subCategoryId: macbookProSubCategory?.id,
@@ -198,6 +222,7 @@ export const seeding = async (prisma: PrismaClient) => {
       },
       {
         title: 'iPad Pro 2021',
+        slug: 'ipad-pro-2021',
         price: 999,
         quantity: 1000,
         subCategoryId: ipadProSubCategory?.id,
@@ -206,6 +231,7 @@ export const seeding = async (prisma: PrismaClient) => {
       },
       {
         title: 'Apple Watch Series 7',
+        slug: 'apple-watch-series-7',
         price: 599,
         quantity: 1000,
         subCategoryId: appleWatchSubCategory?.id,

@@ -19,14 +19,15 @@ export const getAllProductsByCategory = async (req: Request, res: Response) => {
   res.json(products);
 };
 
-export const getProductById = async (req: Request, res: Response) => {
-  const { id } = req.params;
+export const getProductBySlug = async (req: Request, res: Response) => {
+  const { slug } = req.params;
   const product = await prisma.product.findFirst({
     where: {
-      id: Number(id),
+      slug,
     },
     include: {
       category: true,
+      subCategory: true,
       reviews: {
         include: {
           student: true,
@@ -39,10 +40,11 @@ export const getProductById = async (req: Request, res: Response) => {
 };
 
 export const createProduct = async (req: Request, res: Response) => {
-  const { title, price, quantity, categoryId } = req.body;
+  const { title, price, quantity, categoryId, slug } = req.body;
   const product = await prisma.product.create({
     data: {
       title,
+      slug,
       price: Number(price),
       quantity: Number(quantity),
       category: {

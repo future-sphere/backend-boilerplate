@@ -22,10 +22,11 @@ export const getCategoryById = async (req: Request, res: Response) => {
 };
 
 export const createCategory = async (req: Request, res: Response) => {
-  const { title } = req.body;
+  const { title, slug } = req.body;
   const data = await prisma.category.create({
     data: {
       title,
+      slug,
     },
   });
   res.json(data);
