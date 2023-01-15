@@ -3,14 +3,14 @@ import {
   createCategory,
   deleteCategoryById,
   updateCategoryById,
-  getCategoryById,
+  getCategoryBySlug,
 } from './../controllers/category/index';
 import { Router } from 'express';
 
 const categoryRouter = Router();
 
 categoryRouter.get('/', getAllCategories);
-categoryRouter.get('/:id', getCategoryById);
+categoryRouter.get('/:slug', getCategoryBySlug);
 categoryRouter.post('/', createCategory);
 categoryRouter.delete('/:id', deleteCategoryById);
 categoryRouter.put('/:id', updateCategoryById);

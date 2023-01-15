@@ -77,11 +77,12 @@ model Category {
 }
 
 model SubCategory {
-  id          String    @id @default(uuid())
-  slug        String    @unique
-  title       String
-  category    Category? @relation(fields: [categoryId], references: [id])
-  categoryId  String?
-  description String?
-  products    Product[]
+  id                String    @id @default(uuid())
+  slug              String    @unique
+  title             String
+  category          Category? @relation(fields: [categoryId], references: [id])
+  categoryId        String?
+  description       String?
+  products          Product[]
+  thumbnailImageUrl String?
 }

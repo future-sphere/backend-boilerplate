@@ -8,11 +8,11 @@ export const getAllCategories = async (req: Request, res: Response) => {
   res.json(data);
 };
 
-export const getCategoryById = async (req: Request, res: Response) => {
-  const { id } = req.params;
+export const getCategoryBySlug = async (req: Request, res: Response) => {
+  const { slug } = req.params;
   const data = await prisma.category.findFirst({
     where: {
-      id,
+      slug,
     },
     include: {
       products: true,

@@ -15,110 +15,48 @@ export const seeding = async (prisma: PrismaClient) => {
   });
 
   // Create some dummy category here:
-  // Laptops, Phones, Tablets, Accessories.
+  // Mac, Phones, Tablets, Accessories.
 
-  const laptopCategory = await prisma.category.create({
+  const clothing = await prisma.category.create({
     data: {
-      title: 'Laptops',
-      slug: 'laptop',
+      title: 'Clothing',
+      slug: 'clothing',
+      description:
+        "The latest in women's designer clothing from today's top brands has arrived at Saks Fifth Avenue. Our wide selection of women’s denim, tops, sweaters, jackets and loungewear offers styles for any occasion. Plus, complete any look with our curation of women’s designer shoes and accessories.",
       thumbnailImageUrl:
-        'https://www.apple.com/v/mac/home/br/images/overview/compare/compare_mbp14_and_16__f2dhysusb5im_large.png',
+        'https://image.s5a.com/is/image/saks/0400018027345_BLACKNAVY_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
       subCategory: {
         createMany: {
           data: [
             {
-              title: 'MacBook Pro',
-              slug: 'macbook-pro',
+              title: 'Dresses',
+              slug: 'dresses',
+              thumbnailImageUrl:
+                'https://image.s5a.com/is/image/saks/0400018027345_BLACKNAVY_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
             },
             {
-              title: 'MacBook Air',
-              slug: 'macbook-air',
+              title: 'Tops',
+              slug: 'tops',
+              thumbnailImageUrl:
+                'https://image.s5a.com/is/image/saks/0400017269760_SLATE_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
             },
             {
-              title: 'MacBook',
-              slug: 'macbook',
+              title: 'Skirts',
+              slug: 'skirts',
+              thumbnailImageUrl:
+                'https://image.s5a.com/is/image/saks/0400018174422_CLOUDWHITE_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
             },
             {
-              title: 'iMac',
-              slug: 'imac',
-            },
-          ],
-        },
-      },
-    },
-  });
-  const phoneCategory = await prisma.category.create({
-    data: {
-      title: 'Phones',
-      slug: 'phone',
-      thumbnailImageUrl:
-        'https://www.apple.com/v/iphone/home/bk/images/overview/why-iphone/ios16__b66zg2a3322q_large.jpg',
-      subCategory: {
-        createMany: {
-          data: [
-            {
-              title: 'iPhone 14',
-              slug: 'iphone-14',
+              title: 'Jackets',
+              slug: 'jackets',
+              thumbnailImageUrl:
+                'https://image.s5a.com/is/image/saks/0400017826724_LIGHTGREYSANDSTONEHAZE_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
             },
             {
-              title: 'iPhone 13',
-              slug: 'iphone-13',
-            },
-            {
-              title: 'iPhone 12',
-              slug: 'iphone-12',
-            },
-          ],
-        },
-      },
-    },
-  });
-  const tabletCategory = await prisma.category.create({
-    data: {
-      title: 'Tablets',
-      slug: 'tablet',
-      thumbnailImageUrl:
-        'https://www.apple.com/v/ipad/home/cc/images/overview/hero/ipad_hero__d0tgmaq6shm6_large.jpg',
-      subCategory: {
-        createMany: {
-          data: [
-            {
-              title: 'iPad Pro',
-              slug: 'ipad-pro',
-            },
-            {
-              title: 'iPad Air',
-              slug: 'ipad-air',
-            },
-            {
-              title: 'iPad',
-              slug: 'ipad',
-            },
-          ],
-        },
-      },
-    },
-  });
-  const accessoriesCategory = await prisma.category.create({
-    data: {
-      title: 'Accessories',
-      slug: 'accessories',
-      thumbnailImageUrl:
-        'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/magsafe-202209?wid=2880&hei=960&fmt=jpeg&qlt=90&.v=1666047384972',
-      subCategory: {
-        createMany: {
-          data: [
-            {
-              title: 'Magsafe',
-              slug: 'magsafe',
-            },
-            {
-              title: 'AirPods',
-              slug: 'airpods',
-            },
-            {
-              title: 'Apple Watch',
-              slug: 'apple-watch',
+              title: 'Sweaters',
+              slug: 'sweaters',
+              thumbnailImageUrl:
+                'https://image.s5a.com/is/image/saks/0400017643364_CORALRED_ASTL?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
             },
           ],
         },
@@ -126,32 +64,65 @@ export const seeding = async (prisma: PrismaClient) => {
     },
   });
 
-  const iPhoneCategory = await prisma.subCategory.findFirst({
+  const shoes = await prisma.category.create({
+    data: {
+      title: 'Shoes',
+      slug: 'shoes',
+      description: "Women's Designer Shoes & Footwear",
+      thumbnailImageUrl:
+        'https://image.s5a.com/is/image/saks/011023_WMHP_3UP_1_SH_MINIMAL?scl=1&qlt=83&fmt=jpg',
+      subCategory: {
+        createMany: {
+          data: [
+            {
+              title: 'Boots',
+              slug: 'boots',
+              thumbnailImageUrl:
+                'https://image.s5a.com/is/image/saks/0400016855480_BLACK_A1?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
+            },
+            {
+              title: 'Flats',
+              slug: 'flats',
+              thumbnailImageUrl:
+                'https://image.s5a.com/is/image/saks/0400017283513_BLACK?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
+            },
+            {
+              title: 'Heels',
+              slug: 'heels',
+              thumbnailImageUrl:
+                'https://image.s5a.com/is/image/saks/0400017787163_MIRRORSILVER?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
+            },
+          ],
+        },
+      },
+    },
+  });
+
+  const dressSubCategory = await prisma.subCategory.findFirst({
     where: {
-      title: 'iPhone 14',
+      slug: 'dresses',
     },
   });
 
-  // Create a product for iPhone 14, priced at whatever you want and with how many ever quantity you want
-  const dummyProduct = await prisma.product.create({
+  const clothingProduct1 = await prisma.product.create({
     data: {
-      title: 'iPhone 14 Pro',
-      slug: 'iphone-14-pro',
-      price: 1999,
+      title: 'Wayf',
+      slug: 'wayf',
+      price: 148,
       quantity: 1000,
-      description: 'The best iPhone ever',
+      description: 'Plaza Tiered Cotton-Blend Cut-Out Maxi Dress',
       subCategory: {
         connect: {
-          id: iPhoneCategory?.id,
+          id: dressSubCategory?.id,
         },
       },
       category: {
         connect: {
-          id: phoneCategory.id,
+          id: clothing.id,
         },
       },
       thumbnailImage:
-        'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-compare-iphone-14-202209?wid=364&hei=508&fmt=jpeg&qlt=90&.v=1660759995969',
+        'https://image.s5a.com/is/image/saks/0400018373853_LAVENDERDITSY?wid=480&hei=640&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0&id=ETWa_0&fmt=jpg&dpr=off&fit=constrain,1&wid=934&hei=1245',
       reviews: {
         createMany: {
           data: [
@@ -191,60 +162,6 @@ export const seeding = async (prisma: PrismaClient) => {
     },
   });
 
-  const macbookProSubCategory = await prisma.subCategory.findFirst({
-    where: {
-      title: 'MacBook Pro',
-    },
-  });
-
-  const ipadProSubCategory = await prisma.subCategory.findFirst({
-    where: {
-      title: 'iPad Pro',
-    },
-  });
-
-  const appleWatchSubCategory = await prisma.subCategory.findFirst({
-    where: {
-      title: 'Apple Watch',
-    },
-  });
-
-  const products = await prisma.product.createMany({
-    data: [
-      {
-        title: 'MacBook Pro 2021',
-        slug: 'macbook-pro-2021',
-        price: 2999,
-        quantity: 1000,
-        subCategoryId: macbookProSubCategory?.id,
-        thumbnailImage:
-          'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp-spacegray-select-202206?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1664497359481',
-      },
-      {
-        title: 'iPad Pro 2021',
-        slug: 'ipad-pro-2021',
-        price: 999,
-        quantity: 1000,
-        subCategoryId: ipadProSubCategory?.id,
-        thumbnailImage:
-          'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-comp-pro-202210?wid=338&hei=386&fmt=jpeg&qlt=90&.v=1664411153112',
-      },
-      {
-        title: 'Apple Watch Series 7',
-        slug: 'apple-watch-series-7',
-        price: 599,
-        quantity: 1000,
-        subCategoryId: appleWatchSubCategory?.id,
-        thumbnailImage:
-          'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MQE23ref_VW_34FR+watch-49-titanium-ultra_VW_34FR_WF_CO+watch-face-49-alpine-ultra_VW_34FR_WF_CO?wid=375&hei=356&trim=1%2C0&fmt=p-jpg&qlt=95&.v=1660713657930%2C1660927566964%2C1660927563656',
-      },
-    ],
-  });
-
-  if (products) {
-    console.log(' products created.');
-  }
-
   const order = await prisma.order.create({
     data: {
       student: {
@@ -255,7 +172,7 @@ export const seeding = async (prisma: PrismaClient) => {
       products: {
         connect: [
           {
-            id: dummyProduct.id,
+            id: clothingProduct1.id,
           },
         ],
       },
