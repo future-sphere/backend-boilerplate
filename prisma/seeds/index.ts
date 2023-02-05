@@ -139,28 +139,63 @@ export const seeding = async (prisma: PrismaClient) => {
           ],
         },
       },
-      highlightTitle: 'iPhone 14 Pro',
-      highlightDescription: 'The best iPhone ever',
-      productHighlights: {
-        createMany: {
-          data: [
-            {
-              title: 'A14 Bionic',
-              subtitle: 'The fastest chip in a smartphone',
-              image:
-                'https://res.cloudinary.com/dtgh01qqo/image/upload/v1670189195/se-adv-2/iphone-14-pro-model-unselect-gallery-2-202209_GEO_US.jpg',
-            },
-            {
-              title: 'Pro camera system',
-              subtitle: 'The most advanced camera system ever on iPhone',
-              image:
-                'https://res.cloudinary.com/dtgh01qqo/image/upload/v1670189196/se-adv-2/291-hero.jpg',
-            },
-          ],
-        },
-      },
     },
   });
+
+  await prisma.product.createMany({
+    data: [
+      {
+        title: 'Derek Lam 10 Crosby',
+        slug: 'derek-lam-10-crosby',
+        price: 425,
+        quantity: 1000,
+        description: 'Ruffle Sleeveless Silk Dress',
+        subCategoryId: dressSubCategory?.id,
+        categoryId: clothing.id,
+        thumbnailImage: 'https://image.s5a.com/is/image/saks/0400018521801_KHAKI?wid=984&hei=1312&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0'
+      },
+      {
+        title: 'Aje',
+        slug: 'aje',
+        price: 495,
+        quantity: 1000,
+        description: 'Spectral Cut-Out Minidress',
+        subCategoryId: dressSubCategory?.id,
+        categoryId: clothing.id,
+        thumbnailImage: 'https://image.s5a.com/is/image/saks/0400018478358_IVORY?wid=984&hei=1312&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0'
+      },
+      {
+        title: 'Aje',
+        slug: 'aje-pink',
+        price: 495,
+        quantity: 1000,
+        description: 'Simplicity Puff-Sleeve Minidress',
+        subCategoryId: dressSubCategory?.id,
+        categoryId: clothing.id,
+        thumbnailImage: 'https://image.s5a.com/is/image/saks/0400018160526_BALLETPINK?wid=984&hei=1312&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0'
+      },
+      {
+        title: 'Vince',
+        description: 'Wrap Tie-Waist Shirt Dress',
+        slug: 'vince',
+        price: 425,
+        quantity: 1000,
+        subCategoryId: dressSubCategory?.id,
+        categoryId: clothing.id,
+        thumbnailImage: 'https://image.s5a.com/is/image/saks/0400018426175_LIGHTKYANITE?wid=984&hei=1312&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0'
+      },
+      {
+        title: 'Rails',
+        description: 'Lily Plaid Button-Front Shirt Dress',
+        slug: 'rails',
+        price: 238,
+        quantity: 1000,
+        subCategoryId: dressSubCategory?.id,
+        categoryId: clothing.id,
+        thumbnailImage: 'https://image.s5a.com/is/image/saks/0400018386948_BLACK?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0'
+      }
+    ]
+  })
 
   const order = await prisma.order.create({
     data: {
