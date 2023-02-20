@@ -9,13 +9,41 @@ export const getAllSubcategory = async (req: Request, res: Response) => {
 // get all products from a subcategory
 export const getAllProductsBySubcategory = async (req: Request, res: Response) => {
   const { slug } = req.params;
-  const products = await prisma.subCategory.findFirst({
+  const { search, priceFilters } = req.query;
+  const subCategory = await prisma.subCategory.findFirst({
     where: {
       slug,
     },
-    include: {
-      products: true,
-    },
   });
-  res.json(products);
+
+  const priceFilterArr = priceFilters as { min: string, max: string }[];
+
+  const products = await prisma.product.findMany({
+    where: {
+      AND: [
+        {
+          title: {
+            contains: search as string,
+            mode: 'insensitive',
+          }
+        },
+        {
+          subCategoryId: subCategory?.id,
+        },
+        {
+          OR: priceFilters && priceFilterArr.length > 0 ? priceFilterArr.map((price: { min: string, max: string }) => ({
+            price: {
+              lte: Number(price.max),
+              gte: Number(price.min),
+            }
+          })) : undefined,
+        }
+      ],
+    }
+  });
+
+  res.json({
+    ...subCategory,
+    products
+  });
 }
