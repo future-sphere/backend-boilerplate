@@ -7,16 +7,34 @@ export const getAllSubcategory = async (req: Request, res: Response) => {
 };
 
 // get all products from a subcategory
-export const getAllProductsBySubcategory = async (req: Request, res: Response) => {
+export const getAllProductsBySubcategory = async (
+  req: Request,
+  res: Response
+) => {
   const { slug } = req.params;
-  const { search, priceFilters } = req.query;
+  const { search, priceFilters, sorting } = req.query;
   const subCategory = await prisma.subCategory.findFirst({
     where: {
       slug,
     },
   });
 
-  const priceFilterArr = priceFilters as { min: string, max: string }[];
+  const priceFilterArr = priceFilters as { min: string; max: string }[];
+
+  const sortingArr = sorting as { field: string; order: string }[];
+
+  const productSortingLogic =
+    sortingArr && sortingArr.length
+      ? sortingArr.map(({ field, order }) => {
+          return {
+            [field]: order,
+          };
+        })
+      : [
+          {
+            price: 'asc',
+          },
+        ];
 
   const products = await prisma.product.findMany({
     where: {
@@ -25,25 +43,29 @@ export const getAllProductsBySubcategory = async (req: Request, res: Response) =
           title: {
             contains: search as string,
             mode: 'insensitive',
-          }
+          },
         },
         {
           subCategoryId: subCategory?.id,
         },
         {
-          OR: priceFilters && priceFilterArr.length > 0 ? priceFilterArr.map((price: { min: string, max: string }) => ({
-            price: {
-              lte: Number(price.max),
-              gte: Number(price.min),
-            }
-          })) : undefined,
-        }
+          OR:
+            priceFilters && priceFilterArr.length > 0
+              ? priceFilterArr.map((price: { min: string; max: string }) => ({
+                  price: {
+                    lte: Number(price.max),
+                    gte: Number(price.min),
+                  },
+                }))
+              : undefined,
+        },
       ],
-    }
+    },
+    orderBy: productSortingLogic,
   });
 
   res.json({
     ...subCategory,
-    products
+    products,
   });
-}
+};
