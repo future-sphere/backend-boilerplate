@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import authRouter from './auth';
 import categoryRouter from './category';
 import orderRouter from './orders';
 import productRouter from './products';
@@ -14,6 +15,7 @@ baseRouter.use('/students', studentRouter);
 baseRouter.use('/category', categoryRouter);
 baseRouter.use('/reviews', reviewRouter);
 baseRouter.use('/subcategory', subCategoryRouter);
+baseRouter.use('/auth', authRouter);
 baseRouter.get('/health', (req, res) => {
   res.send('OK');
 });

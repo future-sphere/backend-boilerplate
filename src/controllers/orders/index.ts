@@ -4,13 +4,31 @@ import { Request, Response } from 'express';
 const prisma = new PrismaClient();
 
 export const getAllOrders = async (req: Request, res: Response) => {
+  const { id } = req.params;
   const orders = await prisma.order.findMany({
+    where: {
+      studentId: Number(id),
+    },
     include: {
       products: true,
       student: true,
     },
   });
   res.json(orders);
+};
+
+export const getOrderById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const order = await prisma.order.findFirst({
+    where: {
+      id: Number(id),
+    },
+    include: {
+      products: true,
+      student: true,
+    },
+  });
+  res.json(order);
 };
 
 export const createOrder = async (req: Request, res: Response) => {
