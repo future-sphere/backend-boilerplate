@@ -20,6 +20,7 @@ model Student {
   orders    Order[]
   reviews   Review[]
   createdAt DateTime @default(now())
+  Cart      Cart[]
 }
 
 model Product {
@@ -39,6 +40,7 @@ model Product {
   productHighlights    ProductHighlight[]
   highlightTitle       String?
   highlightDescription String?
+  cartItems            CartItem[]
 }
 
 model ProductHighlight {
@@ -88,4 +90,21 @@ model SubCategory {
   description       String?
   products          Product[]
   thumbnailImageUrl String?
+}
+
+model Cart {
+  id        Int        @id @default(autoincrement())
+  student   Student    @relation(fields: [studentId], references: [id])
+  studentId Int
+  createdAt DateTime   @default(now())
+  cartItems CartItem[]
+}
+
+model CartItem {
+  id        Int     @id @default(autoincrement())
+  cart      Cart    @relation(fields: [cartId], references: [id])
+  cartId    Int
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+  quantity  Int
 }

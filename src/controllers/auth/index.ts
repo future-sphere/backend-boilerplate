@@ -9,8 +9,12 @@ export const check = async (req: Request, res: Response) => {
   const { token } = req.query;
   if (token) {
     try {
-      const isValid = jwt.verify(token as string, 'my very secret key');
-      return res.json(isValid);
+      const validToken = jwt.verify(token as string, 'my very secret key');
+      const user = jwt.decode(token as string);
+      return res.json({
+        token: validToken,
+        user,
+      });
     } catch (error: any) {
       if (error.message === 'jwt expired') {
         return res.status(401).json({ message: 'Token expired' });

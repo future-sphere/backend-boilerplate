@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 
 export const seeding = async (prisma: PrismaClient) => {
   console.log('Seeding start...');
+  const passwordHash = bcrypt.hashSync('123456', 10);
   const dummyStudent = await prisma.student.create({
     data: {
       firstName: 'Kevin',
@@ -10,7 +11,7 @@ export const seeding = async (prisma: PrismaClient) => {
       age: 10,
       grade: 'A',
       email: 'kevin.zhang@example.com',
-      password: '123456',
+      password: passwordHash,
     },
   });
 
@@ -152,7 +153,8 @@ export const seeding = async (prisma: PrismaClient) => {
         description: 'Ruffle Sleeveless Silk Dress',
         subCategoryId: dressSubCategory?.id,
         categoryId: clothing.id,
-        thumbnailImage: 'https://image.s5a.com/is/image/saks/0400018521801_KHAKI?wid=984&hei=1312&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0'
+        thumbnailImage:
+          'https://image.s5a.com/is/image/saks/0400018521801_KHAKI?wid=984&hei=1312&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
       },
       {
         title: 'Aje',
@@ -162,7 +164,8 @@ export const seeding = async (prisma: PrismaClient) => {
         description: 'Spectral Cut-Out Minidress',
         subCategoryId: dressSubCategory?.id,
         categoryId: clothing.id,
-        thumbnailImage: 'https://image.s5a.com/is/image/saks/0400018478358_IVORY?wid=984&hei=1312&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0'
+        thumbnailImage:
+          'https://image.s5a.com/is/image/saks/0400018478358_IVORY?wid=984&hei=1312&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
       },
       {
         title: 'Aje',
@@ -172,7 +175,8 @@ export const seeding = async (prisma: PrismaClient) => {
         description: 'Simplicity Puff-Sleeve Minidress',
         subCategoryId: dressSubCategory?.id,
         categoryId: clothing.id,
-        thumbnailImage: 'https://image.s5a.com/is/image/saks/0400018160526_BALLETPINK?wid=984&hei=1312&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0'
+        thumbnailImage:
+          'https://image.s5a.com/is/image/saks/0400018160526_BALLETPINK?wid=984&hei=1312&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
       },
       {
         title: 'Vince',
@@ -182,7 +186,8 @@ export const seeding = async (prisma: PrismaClient) => {
         quantity: 1000,
         subCategoryId: dressSubCategory?.id,
         categoryId: clothing.id,
-        thumbnailImage: 'https://image.s5a.com/is/image/saks/0400018426175_LIGHTKYANITE?wid=984&hei=1312&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0'
+        thumbnailImage:
+          'https://image.s5a.com/is/image/saks/0400018426175_LIGHTKYANITE?wid=984&hei=1312&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
       },
       {
         title: 'Rails',
@@ -192,10 +197,11 @@ export const seeding = async (prisma: PrismaClient) => {
         quantity: 1000,
         subCategoryId: dressSubCategory?.id,
         categoryId: clothing.id,
-        thumbnailImage: 'https://image.s5a.com/is/image/saks/0400018386948_BLACK?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0'
-      }
-    ]
-  })
+        thumbnailImage:
+          'https://image.s5a.com/is/image/saks/0400018386948_BLACK?wid=534&hei=712&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0',
+      },
+    ],
+  });
 
   const order = await prisma.order.create({
     data: {
