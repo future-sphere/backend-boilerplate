@@ -183,13 +183,21 @@ export const getCartByStudent = async (req: Request, res: Response) => {
       studentId: +id,
     },
     include: {
-      cartItems: true,
+      cartItems: {
+        include: {
+          product: true,
+        },
+      },
     },
   });
 
   if (!cart) {
     return res.status(404).json({ message: 'Cart not found' });
   }
+
+  cart.cartItems = cart.cartItems.sort((a, b) => {
+    return a.product.price - b.product.price;
+  });
 
   return res.json(cart);
 };
