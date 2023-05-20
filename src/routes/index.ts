@@ -7,6 +7,7 @@ import reviewRouter from './review';
 import studentRouter from './students';
 import subCategoryRouter from './subcategory';
 import cartRouter from './cart';
+import paymentRouter from './payment';
 
 const baseRouter = Router();
 
@@ -18,6 +19,7 @@ baseRouter.use('/reviews', reviewRouter);
 baseRouter.use('/subcategory', subCategoryRouter);
 baseRouter.use('/auth', authRouter);
 baseRouter.use('/cart', cartRouter);
+baseRouter.use('/payment', paymentRouter);
 baseRouter.get('/health', (req, res) => {
   res.send('OK');
 });

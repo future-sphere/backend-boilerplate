@@ -202,21 +202,4 @@ export const seeding = async (prisma: PrismaClient) => {
       },
     ],
   });
-
-  const order = await prisma.order.create({
-    data: {
-      student: {
-        connect: {
-          id: dummyStudent.id,
-        },
-      },
-      products: {
-        connect: [
-          {
-            id: clothingProduct1.id,
-          },
-        ],
-      },
-    },
-  });
 };

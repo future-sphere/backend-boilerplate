@@ -29,7 +29,6 @@ model Product {
   title                String
   price                Int
   quantity             Int
-  orders               Order[]
   category             Category?          @relation(fields: [categoryId], references: [id])
   categoryId           String?
   subCategory          SubCategory?       @relation(fields: [subCategoryId], references: [id])
@@ -63,11 +62,25 @@ model Review {
 }
 
 model Order {
-  id        Int       @id @default(autoincrement())
-  student   Student   @relation(fields: [studentId], references: [id], onDelete: Restrict)
-  studentId Int
-  products  Product[]
-  createdAt DateTime  @default(now())
+  id                Int      @id @default(autoincrement())
+  student           Student  @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  studentId         Int
+  cart              Cart     @relation(fields: [cartId], references: [id], onDelete: Restrict)
+  cartId            Int
+  createdAt         DateTime @default(now())
+  shippingAddress   Address  @relation(fields: [shippingAddressId], references: [id])
+  shippingAddressId String
+  subtotal          Int
+  tax               Int
+}
+
+model Address {
+  id            String  @id @default(uuid())
+  streetAddress String
+  city          String
+  state         String
+  zipCode       String
+  orders        Order[]
 }
 
 model Category {
@@ -98,6 +111,7 @@ model Cart {
   studentId Int
   createdAt DateTime   @default(now())
   cartItems CartItem[]
+  orders    Order[]
 }
 
 model CartItem {

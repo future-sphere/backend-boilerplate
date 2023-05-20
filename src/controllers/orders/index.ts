@@ -10,7 +10,6 @@ export const getAllOrders = async (req: Request, res: Response) => {
       studentId: Number(id),
     },
     include: {
-      products: true,
       student: true,
     },
   });
@@ -24,7 +23,6 @@ export const getOrderById = async (req: Request, res: Response) => {
       id: Number(id),
     },
     include: {
-      products: true,
       student: true,
     },
   });
@@ -32,7 +30,16 @@ export const getOrderById = async (req: Request, res: Response) => {
 };
 
 export const createOrder = async (req: Request, res: Response) => {
-  const { studentId, products } = req.body;
+  const {
+    studentId,
+    cartId,
+    shippingAddressStreet,
+    shippingAddressCity,
+    shippingAddressState,
+    shippingAddressPostalCode,
+    subtotal,
+    tax,
+  } = req.body;
 
   const order = await prisma.order.create({
     data: {
@@ -41,14 +48,23 @@ export const createOrder = async (req: Request, res: Response) => {
           id: Number(studentId),
         },
       },
-      products: {
-        connect: (products as []).map((productId: string) => ({
-          id: Number(productId),
-        })),
+      cart: {
+        connect: {
+          id: Number(cartId),
+        },
       },
+      shippingAddress: {
+        create: {
+          streetAddress: shippingAddressStreet,
+          city: shippingAddressCity,
+          state: shippingAddressState,
+          zipCode: shippingAddressPostalCode,
+        },
+      },
+      subtotal: Number(subtotal),
+      tax: Number(tax),
     },
     include: {
-      products: true,
       student: true,
     },
   });
@@ -87,14 +103,8 @@ export const updateOrder = async (req: Request, res: Response) => {
           id: Number(studentId),
         },
       },
-      products: {
-        connect: (products as []).map((productId: string) => ({
-          id: Number(productId),
-        })),
-      },
     },
     include: {
-      products: true,
       student: true,
     },
   });
