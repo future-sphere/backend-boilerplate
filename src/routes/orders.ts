@@ -4,6 +4,7 @@ import {
   deleteOrder,
   getAllOrders,
   getOrderById,
+  getOrderByPaymentIntent,
   updateOrder,
 } from '../controllers/orders';
 
@@ -14,5 +15,6 @@ orderRouter.get('/:id', getOrderById);
 orderRouter.post('/', createOrder);
 orderRouter.delete('/', deleteOrder);
 orderRouter.put('/', updateOrder);
+orderRouter.get('/paymentIntent/:paymentIntentId', getOrderByPaymentIntent);
 
 export default orderRouter;

@@ -10,7 +10,6 @@ export const getStudents = async (req: Request, res: Response) => {
       orders: {
         select: {
           id: true,
-          products: true,
         },
       },
     },
@@ -161,7 +160,6 @@ export const getStudentById = async (req: Request, res: Response) => {
       orders: {
         select: {
           id: true,
-          products: true,
         },
       },
     },

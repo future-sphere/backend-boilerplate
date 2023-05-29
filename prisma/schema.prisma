@@ -62,16 +62,17 @@ model Review {
 }
 
 model Order {
-  id                Int      @id @default(autoincrement())
-  student           Student  @relation(fields: [studentId], references: [id], onDelete: Restrict)
-  studentId         Int
-  cart              Cart     @relation(fields: [cartId], references: [id], onDelete: Restrict)
-  cartId            Int
-  createdAt         DateTime @default(now())
-  shippingAddress   Address  @relation(fields: [shippingAddressId], references: [id])
-  shippingAddressId String
-  subtotal          Int
-  tax               Int
+  id                    Int      @id @default(autoincrement())
+  student               Student  @relation(fields: [studentId], references: [id], onDelete: Restrict)
+  studentId             Int
+  cart                  Cart     @relation(fields: [cartId], references: [id], onDelete: Restrict)
+  cartId                Int
+  createdAt             DateTime @default(now())
+  shippingAddress       Address  @relation(fields: [shippingAddressId], references: [id])
+  shippingAddressId     String
+  subtotal              Float
+  tax                   Float
+  stripePaymentIntentId String?
 }
 
 model Address {
