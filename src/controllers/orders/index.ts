@@ -77,6 +77,18 @@ export const getOrderById = async (req: Request, res: Response) => {
   });
 };
 
+export const getOrderByPaymentIntent = async (req: Request, res: Response) => {
+  const { paymentIntentId } = req.params;
+  console.log(paymentIntentId, 'paymentIntentId');
+  const order = await prisma.order.findFirst({
+    where: {
+      stripePaymentIntentId: paymentIntentId,
+    },
+  });
+  console.log(order, 'order');
+  res.json(order);
+};
+
 export const createOrder = async (req: Request, res: Response) => {
   const {
     studentId,
@@ -112,7 +124,7 @@ export const createOrder = async (req: Request, res: Response) => {
       },
       subtotal: Number(subtotal),
       tax: Number(tax),
-      paymentIntentId,
+      stripePaymentIntentId: paymentIntentId,
     },
     include: {
       student: true,

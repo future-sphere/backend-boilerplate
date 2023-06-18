@@ -69,16 +69,6 @@ export const deleteProduct = async (req: Request, res: Response) => {
       message: 'Product does not exist',
     });
   }
-  const productExistsInCart = await prisma.cartItem.findFirst({
-    where: {
-      productId: Number(id),
-    },
-  });
-  if (productExistsInCart) {
-    return res.json({
-      message: 'Cannot delete product with existing order',
-    });
-  }
   const product = await prisma.product.delete({
     where: {
       id: Number(id),
