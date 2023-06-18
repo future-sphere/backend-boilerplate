@@ -72,6 +72,7 @@ model Order {
   shippingAddressId String
   subtotal          Int
   tax               Int
+  paymentIntentId   String
 }
 
 model Address {
