@@ -25,5 +25,5 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 const server = app.listen(8888, () =>
   console.log(`
 🚀 Server ready at: http://localhost:8888
-⭐️ See sample requests: http://pris.ly/e/ts/rest-express#3-using-the-rest-api`),
+⭐️ Happy hacking!`),
 );

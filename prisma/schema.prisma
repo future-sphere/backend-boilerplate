@@ -5,121 +5,20 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://bctc:Bctc666!@lab.bctc.io:7087/se-adv-2-project-2-peter"
+  url      = "postgresql://bctc:Bctc666!@lab.bctc.io:7087/se-8-1"
 }
 
-model Student {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  avatar    String?
-  firstName String?
-  lastName  String?
-  age       Int?
-  grade     String?
-  orders    Order[]
-  reviews   Review[]
-  createdAt DateTime @default(now())
-  Cart      Cart[]
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  post     Post[]
 }
 
-model Product {
-  id                   Int                @id @default(autoincrement())
-  slug                 String             @unique
-  title                String
-  price                Int
-  quantity             Int
-  category             Category?          @relation(fields: [categoryId], references: [id])
-  categoryId           String?
-  subCategory          SubCategory?       @relation(fields: [subCategoryId], references: [id])
-  subCategoryId        String?
-  thumbnailImage       String?
-  reviews              Review[]
-  description          String?
-  productHighlights    ProductHighlight[]
-  highlightTitle       String?
-  highlightDescription String?
-  cartItems            CartItem[]
-}
-
-model ProductHighlight {
-  id        Int      @id @default(autoincrement())
-  title     String
-  subtitle  String
-  image     String
-  product   Product? @relation(fields: [productId], references: [id])
-  productId Int?
-}
-
-model Review {
-  id        Int      @id @default(autoincrement())
-  rating    Int
-  comment   String
-  product   Product? @relation(fields: [productId], references: [id])
-  productId Int?
-  student   Student? @relation(fields: [studentId], references: [id])
-  studentId Int?
-}
-
-model Order {
-  id                    Int      @id @default(autoincrement())
-  student               Student  @relation(fields: [studentId], references: [id], onDelete: Restrict)
-  studentId             Int
-  cart                  Cart     @relation(fields: [cartId], references: [id], onDelete: Restrict)
-  cartId                Int
-  createdAt             DateTime @default(now())
-  shippingAddress       Address  @relation(fields: [shippingAddressId], references: [id])
-  shippingAddressId     String
-  subtotal              Float
-  tax                   Float
-  stripePaymentIntentId String?
-}
-
-model Address {
-  id            String  @id @default(uuid())
-  streetAddress String
-  city          String
-  state         String
-  zipCode       String
-  orders        Order[]
-}
-
-model Category {
-  id                String        @id @default(uuid())
-  slug              String        @unique
-  title             String
-  products          Product[]
-  description       String?
-  thumbnailImageUrl String?
-  heroImageUrl      String?
-  subCategory       SubCategory[]
-}
-
-model SubCategory {
-  id                String    @id @default(uuid())
-  slug              String    @unique
-  title             String
-  category          Category? @relation(fields: [categoryId], references: [id])
-  categoryId        String?
-  description       String?
-  products          Product[]
-  thumbnailImageUrl String?
-}
-
-model Cart {
-  id        Int        @id @default(autoincrement())
-  student   Student    @relation(fields: [studentId], references: [id])
-  studentId Int
-  createdAt DateTime   @default(now())
-  cartItems CartItem[]
-  orders    Order[]
-}
-
-model CartItem {
-  id        Int     @id @default(autoincrement())
-  cart      Cart    @relation(fields: [cartId], references: [id])
-  cartId    Int
-  product   Product @relation(fields: [productId], references: [id])
-  productId Int
-  quantity  Int
+model Post {
+  id       Int    @id @default(autoincrement())
+  title    String
+  content  String
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId Int
 }
